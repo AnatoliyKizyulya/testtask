@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: ping
-        image: ping:$BUILD_NUMBER
+        image: ping:30
         ports:
         - containerPort: 8080
 ---
@@ -29,7 +29,10 @@ metadata:
 spec:
   ports:
   - name: ping
-    port: 8080
+    port: 80
+    targetPort: 8080
+    nodePort: 32000
+  type: NodePort
   clusterIP: None
   selector:
     app: ping
@@ -45,7 +48,7 @@ spec:
    - host: hello-world.info
      http:
        paths:
-       - path: /
+       - path: /ping
          backend:
            serviceName: ping
-           servicePort: 8080
+           servicePort: 80
