@@ -1,6 +1,6 @@
 FROM        maven:3.6-jdk-8-slim
 RUN         mkdir /myapp
-COPY        complete /myapp
+COPY        . /myapp
 WORKDIR     /myapp
 RUN         mvn package
 
