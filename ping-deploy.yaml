@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: ping
-        image: ping:30
+        image: ping:33
         ports:
         - containerPort: 8080
 ---
@@ -31,7 +31,6 @@ spec:
   - name: ping
     port: 80
     targetPort: 8080
-    nodePort: 32000
   clusterIP: None
   selector:
     app: ping
