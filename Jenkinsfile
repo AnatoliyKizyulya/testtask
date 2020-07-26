@@ -38,6 +38,7 @@ pipeline {
                     sh """
                     helm upgrade --wait --install ping-helm ping-deploy/ --set image.tag=$BUILD_NUMBER,minikubeip=${minikubeip} --create-namespace -n test
                     helm list -A
+                    sleep 10s
                     """
                     def check = sh(script: "curl -s test-ping-app.${minikubeip}.nip.io/ping", returnStdout: true).trim()
                     echo check
