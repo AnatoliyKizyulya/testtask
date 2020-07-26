@@ -20,3 +20,5 @@ README.html
 .idea
 Dockerfile
 .git
+ping-deploy.yaml
+ping-deploy
