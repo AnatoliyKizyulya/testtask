@@ -36,14 +36,14 @@ pipeline {
                 script{
                     def minikubeip = sh(script: 'minikube ip', returnStdout: true).trim()
                     sh """
-                    helm upgrade --install ping-helm ping-deploy/ --set image.tag=$BUILD_NUMBER,minikubeip=${minikubeip} --create-namespace -n test
+                    helm upgrade --wait --install ping-helm ping-deploy/ --set image.tag=$BUILD_NUMBER,minikubeip=${minikubeip} --create-namespace -n test
                     helm list -A
                     """
                     def check = sh(script: "curl -s test-ping-app.${minikubeip}.nip.io/ping | tail -n 1 | jq -r .content || echo nopong", returnStdout: true).trim()
                     if (check == 'pong'){
                         echo "Test complete succesful, deploy app to prod"
                         sh """
-                        helm upgrade --install ping-helm ping-deploy/ --set image.tag=$BUILD_NUMBER,minikubeip=${minikubeip} --create-namespace -n prod
+                        helm upgrade --wait --install ping-helm ping-deploy/ --set image.tag=$BUILD_NUMBER,minikubeip=${minikubeip} --create-namespace -n prod
                         helm list -A
                         """
                     }else {
