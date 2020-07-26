@@ -39,7 +39,7 @@ pipeline {
                     helm upgrade --wait --install ping-helm ping-deploy/ --set image.tag=$BUILD_NUMBER,minikubeip=${minikubeip} --create-namespace -n test
                     helm list -A
                     """
-                    def check = httpRequest 'http://test-ping-app.${minikubeip}.nip.io/ping'
+                    def check = httpRequest "http://test-ping-app.${minikubeip}.nip.io/ping"
                     if ((response.content ==~ "(.*)pong(.*)")){
                         echo "Test complete succesful, deploy app to prod"
                         sh """
