@@ -39,8 +39,8 @@ pipeline {
                     helm upgrade --wait --install ping-helm ping-deploy/ --set image.tag=$BUILD_NUMBER,minikubeip=${minikubeip} --create-namespace -n test
                     helm list -A
                     """
-                    def check = sh(script: "curl -s test-ping-app.${minikubeip}.nip.io/ping | tail -n 1 | jq -r .content || echo nopong", returnStdout: true).trim()
-                    if (check == 'pong'){
+                    def check = sh(script: "curl -s test-ping-app.${minikubeip}.nip.io/ping", returnStdout: true).trim()
+                    if (check ==~ 'pong'){
                         echo "Test complete succesful, deploy app to prod"
                         sh """
                         helm upgrade --wait --install ping-helm ping-deploy/ --set image.tag=$BUILD_NUMBER,minikubeip=${minikubeip} --create-namespace -n prod
