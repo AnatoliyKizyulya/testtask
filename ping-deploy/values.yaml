@@ -1,4 +1,4 @@
 replicaCount: 2
 image:
-  name: "ping"
+  name: "ping_pipe"
   tag: 3

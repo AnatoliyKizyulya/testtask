@@ -31,5 +31,12 @@ pipeline {
                 """
             }
         }
+        stage ('Helm deploy to test'){
+            steps {
+                sh """
+                helm install ping-helm ping-deploy/ --set image.tag=$BUILD_NUMBER --dry-run
+                """
+            }
+        }
     }
 }
