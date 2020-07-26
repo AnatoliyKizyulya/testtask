@@ -2,3 +2,4 @@ replicaCount: 2
 image:
   name: "ping_pipe"
   tag: 3
+minikubeip: 172.17.0.2
